@@ -17,13 +17,10 @@ app.set('views', path.resolve('./views'));
 // Connection
 connectMongoDB(process.env.MONGODB_URL);
 
-
 // Routes
 app.use('/', userRouter)
 
-
-
+// Server
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
 })
-
