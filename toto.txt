@@ -1,0 +1,5 @@
+1. Method Override
+POST /users/:id/update → PATCH /users/:id
+POST /users/:id/delete → DELETE /users/:id
+
+2. Pagination + Search
