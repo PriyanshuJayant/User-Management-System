@@ -4,6 +4,7 @@ const app = express();
 const userRouter = require('./routes/router.js');
 const { connectMongoDB } = require('./connections/mongoDB');
 const path = require('path');
+const PORT = process.env.PORT || 3000;
 require('dotenv').config();
 
 // Middlewares
@@ -22,7 +23,7 @@ app.use('/', userRouter)
 
 
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server started at http://localhost:${process.env.PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server started at http://localhost:${PORT}`);
 })
 
