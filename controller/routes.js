@@ -1,8 +1,8 @@
-const User = require('../models/Schema.js');
+const Entries = require('../models/Schema.js');
 
 // GET
 async function handleGetUserData(req, res) {
-    const allUsers = await User.find({});
+    const allUsers = await Entries.find({});
     return res.send(allUsers);
 }
 
@@ -13,7 +13,7 @@ async function handleCreateUser(req, res) {
         return res.status(400).json({ message: "Invalid Data" });
     }
     try {
-        const user = await User.create({
+        const user = await Entries.create({
             fullName,
             email,
             age,
@@ -38,7 +38,7 @@ async function handleGetUserById(req, res) {
         if (!userID) {
             return res.status(400).json({ message: 'User ID is required' });
         }
-        const user = await User.findById(userID)
+        const user = await Entries.findById(userID)
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -59,7 +59,7 @@ async function handleDeleteUserById(req, res) {
         if (!userID) {
             return res.status(400).json({ message: 'User ID is required' });
         }
-        const user = await User.findByIdAndDelete(userID);
+        const user = await Entries.findByIdAndDelete(userID);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -86,7 +86,7 @@ async function handleUpdateUserByID(req, res) {
         if (!Object.keys(update).length) {
             return res.status(400).json({ message: 'No update Data Provided' });
         }
-        const updateUser = await User.findByIdAndUpdate(
+        const updateUser = await Entries.findByIdAndUpdate(
             userID,
             update,
             { new: true, runValidators: true }
@@ -110,7 +110,7 @@ async function handleUpdateUserByID(req, res) {
 // Render Home Page with all Users
 async function handleRenderHomePage(req, res) {
     try {
-        const allUsers = await User.find({});
+        const allUsers = await Entries.find({});
         return res.render('index', { users: allUsers });
     } catch (error) {
         return res.status(500).json({
@@ -130,7 +130,7 @@ async function handleCreateUserSSR(req, res) {
             return res.redirect('/');
         }
 
-        await User.create({ fullName, email, age, gender });
+        await Entries.create({ fullName, email, age, gender });
 
         return res.redirect('/');
     } catch (error) {
@@ -140,7 +140,7 @@ async function handleCreateUserSSR(req, res) {
 
 async function handleDeleteUserSSR(req, res) {
     try {
-        await User.findByIdAndDelete(req.params.id);
+        await Entries.findByIdAndDelete(req.params.id);
         return res.redirect('/');
     } catch (error) {
         return res.redirect('/');
@@ -149,7 +149,7 @@ async function handleDeleteUserSSR(req, res) {
 
 async function handleUpdateUserSSR(req, res) {
     try {
-        await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        await Entries.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
         return res.redirect('/');
     } catch (error) {
         return res.redirect('/');
@@ -158,7 +158,7 @@ async function handleUpdateUserSSR(req, res) {
 
 async function handleRenderEditPage(req, res) {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await Entries.findById(req.params.id);
         if (!user) return res.redirect('/');
         res.render('edit', { user });
     } catch {

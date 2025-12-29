@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['male', 'female', 'other'],
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
-const User = mongoose.model('users', userSchema);
+const Entries = mongoose.model('users', userSchema);
 
-module.exports = User;
+module.exports = Entries;

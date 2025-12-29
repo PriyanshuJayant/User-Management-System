@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const userRouter = require('./routes/router.js');
+const userData = require('./routes/static.js')
 const { connectMongoDB } = require('./connections/mongoDB');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
@@ -18,7 +19,9 @@ app.set('views', path.resolve('./views'));
 connectMongoDB(process.env.MONGODB_URL);
 
 // Routes
-app.use('/', userRouter)
+app.use('/', userRouter);
+app.use('/', userData);
+
 
 // Server
 app.listen(PORT, () => {
