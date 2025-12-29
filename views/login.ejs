@@ -12,6 +12,9 @@
     <div class="cosmic-nebula"></div>
 
     <div class="auth-container">
+      <% if (locals.error) { %>
+       <p style="color: red;"><%= locals.error %></p>
+      <% } %>
       <div class="auth-box">
         <h2>Welcome Back</h2>
         <p class="subtitle">Sign in to your account</p>

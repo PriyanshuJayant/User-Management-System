@@ -12,8 +12,8 @@ router.get('/login', handleRender_Login);
 router.get('/signup', handleRender_Signup);
 
 // Handlers
-router.post('/api/login', handleUser_Login);
 router.post('/api/signup', handleUser_Signup);
+router.post('/api/login', handleUser_Login);
 router.get('/api/logout', handleUser_Logout);
 
 module.exports = router;
