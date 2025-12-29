@@ -1,6 +1,5 @@
-const { applyTimestamps } = require("./Schema");
+const mongoose = require('mongoose');
 
-const mongoose = requrie('mongoose');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,7 +17,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 const User = mongoose.model('User_ID', userSchema);
 

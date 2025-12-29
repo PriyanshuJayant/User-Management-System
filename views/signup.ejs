@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up - User Management System</title>
-    <link rel="stylesheet" href="/index.css">
-</head>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
 
-<body>
+  <body>
     <div class="cosmic-nebula"></div>
 
     <div class="auth-container">
-        <div class="auth-box">
-            <h2>Create Account</h2>
-            <p class="subtitle">Get started with your account</p>
+      <div class="auth-box">
+        <h2>Create Account</h2>
+        <p class="subtitle">Get started with your account</p>
 
-            <form action="/signup" method="POST">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
-                </div>
+        <form action="/api/signup" method="POST">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Create a password" required>
-                </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Create a password"
+              required
+            />
+          </div>
 
-                <button type="submit">Create Account</button>
-            </form>
+          <button type="submit">Create Account</button>
+        </form>
 
-            <div class="auth-footer">
-                <p>Already have an account? <a href="/login">Sign in</a></p>
-            </div>
+        <div class="auth-footer">
+          <p>Already have an account? <a href="/login">Sign in</a></p>
         </div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
