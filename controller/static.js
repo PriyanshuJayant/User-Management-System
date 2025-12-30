@@ -74,11 +74,7 @@ async function handleUser_Login(req, res) {
 
 async function handleUser_Logout(req, res) {
     const sessionId = req.cookies.sessionId;
-
-    // Remove session from store
     removeUser(sessionId);
-
-    // Clear cookie
     res.clearCookie('sessionId');
 
     return res.redirect('/login');

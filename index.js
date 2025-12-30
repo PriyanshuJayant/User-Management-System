@@ -21,8 +21,8 @@ app.set('views', path.resolve('./views'));
 connectMongoDB(process.env.MONGODB_URL);
 
 // Routes
-app.use('/', userRouter);
 app.use('/', userData);
+app.use('/', userRouter);
 
 const used = process.memoryUsage();
 const memoryUsage = {
