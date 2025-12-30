@@ -9,20 +9,25 @@ const { handleGetUserData,
     handleCreateUserSSR,
     handleDeleteUserSSR,
     handleUpdateUserSSR,
-    handleRenderEditPage
+    handleRenderEditPage,
+    handleRenderEntriesPage
 } = require('../controller/routes.js')
 
-
+// SSR routes
 router.post('/users', handleCreateUserSSR);
 router.post('/users/:id/delete', handleDeleteUserSSR);
 router.post('/users/:id/update', handleUpdateUserSSR);
 router.get('/users/:id/edit', handleRenderEditPage);
 
-// handlers
+// SSR handlers
 router.route('/')
     .get(handleRenderHomePage)
+
+    router.route('/dashboard')
+    .get(handleRenderEntriesPage)
     .post(handleCreateUserSSR)
 
+// API handlers
 router.route('/api/')
     .get(handleGetUserData)
     .post(handleCreateUser)

@@ -111,6 +111,17 @@ async function handleUpdateUserByID(req, res) {
 async function handleRenderHomePage(req, res) {
     try {
         const allUsers = await Entries.find({});
+        return res.render('home', { users: allUsers });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error fetching Data',
+            error: error
+        })
+    }
+}
+async function handleRenderEntriesPage(req, res) {
+    try {
+        const allUsers = await Entries.find({});
         return res.render('index', { users: allUsers });
     } catch (error) {
         return res.status(500).json({
@@ -127,42 +138,42 @@ async function handleCreateUserSSR(req, res) {
         const { fullName, email, age, gender } = req.body;
 
         if (!fullName || !email || !age || !gender) {
-            return res.redirect('/');
+            return res.redirect('/dashboard?error=invalid');
         }
 
         await Entries.create({ fullName, email, age, gender });
 
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.redirect('/?error=server');
+        return res.redirect('/dashboard?error=server');
     }
 }
 
 async function handleDeleteUserSSR(req, res) {
     try {
         await Entries.findByIdAndDelete(req.params.id);
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     }
 }
 
 async function handleUpdateUserSSR(req, res) {
     try {
         await Entries.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     }
 }
 
 async function handleRenderEditPage(req, res) {
     try {
         const user = await Entries.findById(req.params.id);
-        if (!user) return res.redirect('/');
+        if (!user) return res.redirect('/dashboard');
         res.render('edit', { user });
     } catch {
-        res.redirect('/');
+        res.redirect('/dashboard');
     }
 }
 
@@ -178,5 +189,5 @@ module.exports = {
     handleDeleteUserSSR,
     handleUpdateUserSSR,
     handleRenderEditPage,
-
+    handleRenderEntriesPage,
 }

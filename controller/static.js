@@ -33,7 +33,7 @@ async function handleUser_Login(req, res) {
 
         
 
-        return res.redirect("/");
+        return res.redirect("/dashboard");
         
     } catch (error) {
         return res.status(500).json({ message: "Something went wrong", error: error.message });
