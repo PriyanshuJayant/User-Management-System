@@ -116,10 +116,19 @@ async function handleCreateUserSSR(req, res) {
             return res.redirect('/dashboard?error=invalid');
         }
 
-        await Entries.create({ fullName, email, age, gender });
+        const createdBy = req.user?._id;
+
+        await Entries.create({
+            fullName,
+            email,
+            age,
+            gender,
+            createdBy 
+        });
 
         return res.redirect('/dashboard');
     } catch (error) {
+        console.log(error);
         return res.redirect('/dashboard?error=server');
     }
 }

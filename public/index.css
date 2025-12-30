@@ -387,8 +387,7 @@ th {
 
 tbody tr {
   border-bottom: 1px solid #333;
-  transition: all 0.3s ease;
-  animation: slideInLeft 0.3s ease-out backwards;
+  transition: background-color 0.2s ease;
 }
 
 tbody tr:hover {
@@ -412,43 +411,6 @@ tbody tr:nth-child(even) {
 
 tbody tr:nth-child(even):hover {
   background-color: rgba(120, 180, 255, 0.1);
-}
-
-/* Staggered Row Animation Delays */
-tbody tr:nth-child(1) {
-  animation-delay: 0.05s;
-}
-tbody tr:nth-child(2) {
-  animation-delay: 0.1s;
-}
-tbody tr:nth-child(3) {
-  animation-delay: 0.15s;
-}
-tbody tr:nth-child(4) {
-  animation-delay: 0.2s;
-}
-tbody tr:nth-child(5) {
-  animation-delay: 0.25s;
-}
-tbody tr:nth-child(6) {
-  animation-delay: 0.3s;
-}
-tbody tr:nth-child(7) {
-  animation-delay: 0.35s;
-}
-tbody tr:nth-child(8) {
-  animation-delay: 0.4s;
-}
-tbody tr:nth-child(9) {
-  animation-delay: 0.45s;
-}
-tbody tr:nth-child(10) {
-  animation-delay: 0.5s;
-}
-
-/* Highlighted Row (for new/updated items) */
-tbody tr.highlight {
-  animation: rowHighlight 2s ease-out;
 }
 
 /* Empty state */

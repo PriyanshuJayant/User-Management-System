@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Add ripple effect to buttons
-    const buttons = document.querySelectorAll('button, .btn-primary, .btn-secondary, .nav-btn');
+    // Add ripple effect to buttons (skip submit buttons to avoid interference)
+    const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-btn, .action-btn');
     buttons.forEach(button => {
         button.addEventListener('click', function (e) {
             const ripple = document.createElement('span');
