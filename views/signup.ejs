@@ -11,9 +11,28 @@
     <div class="cosmic-nebula"></div>
 
     <div class="auth-container">
-      <div class="auth-box">
+      <div class="auth-box<%= locals.error ? ' has-error' : '' %>">
         <h2>Create Account</h2>
         <p class="subtitle">Get started with your account</p>
+
+        <% if (locals.error) { %>
+        <div class="error-message">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span><%= error %></span>
+        </div>
+        <% } %>
 
         <form action="/api/signup" method="POST">
           <div class="form-group">
@@ -57,5 +76,6 @@
         </div>
       </div>
     </div>
+    <script src="/transitions.js"></script>
   </body>
 </html>

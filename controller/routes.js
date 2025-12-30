@@ -6,31 +6,6 @@ async function handleGetUserData(req, res) {
     return res.send(allUsers);
 }
 
-// POST
-async function handleCreateUser(req, res) {
-    const { fullName, email, age, gender } = req.body;
-    if (!fullName || !email || !age || !gender) {
-        return res.status(400).json({ message: "Invalid Data" });
-    }
-    try {
-        const user = await Entries.create({
-            fullName,
-            email,
-            age,
-            gender
-        })
-        return res.status(200).json({
-            message: "User Created Successfully",
-            data: user
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: "Error Creating User",
-            error: error.message
-        })
-    }
-}
-
 // Get User by ID
 async function handleGetUserById(req, res) {
     try {
@@ -180,7 +155,6 @@ async function handleRenderEditPage(req, res) {
 
 module.exports = {
     handleGetUserData,
-    handleCreateUser,
     handleGetUserById,
     handleDeleteUserById,
     handleUpdateUserByID,

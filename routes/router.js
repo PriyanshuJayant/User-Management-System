@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { handleGetUserData,
-    handleCreateUser,
     handleGetUserById,
     handleDeleteUserById,
     handleUpdateUserByID,
@@ -12,6 +11,7 @@ const { handleGetUserData,
     handleRenderEditPage,
     handleRenderEntriesPage
 } = require('../controller/routes.js')
+const { isAuthenticated, isGuest } = require('../middleware/auth.js')
 
 // SSR routes
 router.post('/users', handleCreateUserSSR);
@@ -23,14 +23,13 @@ router.get('/users/:id/edit', handleRenderEditPage);
 router.route('/')
     .get(handleRenderHomePage)
 
-    router.route('/dashboard')
-    .get(handleRenderEntriesPage)
-    .post(handleCreateUserSSR)
+router.route('/dashboard')
+    .get(isAuthenticated, handleRenderEntriesPage)
 
 // API handlers
 router.route('/api/')
     .get(handleGetUserData)
-    .post(handleCreateUser)
+    .post(handleCreateUserSSR)
 
 router.route('/api/:id')
     .get(handleGetUserById)
