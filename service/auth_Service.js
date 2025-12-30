@@ -5,8 +5,7 @@ const sessionStore = new Map();
 
 function setUser(user) {
     const sessionId = uuidv4();
-    console.log(sessionId);
-    
+
     sessionStore.set(sessionId, {
         _id: user._id,
         email: user.email,

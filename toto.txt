@@ -3,3 +3,19 @@ POST /users/:id/update → PATCH /users/:id
 POST /users/:id/delete → DELETE /users/:id
 
 2. Pagination + Search
+
+3. Usage.log
+Create a log File that logs all the requests made to the server with the following details:
+- IP Address
+- Requested URL
+- Requested Method
+- Requested Time
+- Response Status
+
+Create a Log File that Keeps track of number of entries in the database like users, data
+
+3. Create a Seprate page in which any user can add their data and it will be stored in the database without CreatedBy field
+
+4. in /Dashboard add a Name that tells who am i logged in as
+
+5.  Add Logout Functionality

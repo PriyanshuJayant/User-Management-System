@@ -96,7 +96,8 @@ async function handleRenderHomePage(req, res) {
 }
 async function handleRenderEntriesPage(req, res) {
     try {
-        const allUsers = await Entries.find({});
+        const allUsers = await Entries.find({ createdBy: req.user?._id });
+
         return res.render('index', { users: allUsers });
     } catch (error) {
         return res.status(500).json({
@@ -117,25 +118,23 @@ async function handleCreateUserSSR(req, res) {
         }
 
         const createdBy = req.user?._id;
-
         await Entries.create({
             fullName,
             email,
             age,
             gender,
-            createdBy 
+            createdBy
         });
 
         return res.redirect('/dashboard');
     } catch (error) {
-        console.log(error);
         return res.redirect('/dashboard?error=server');
     }
 }
 
 async function handleDeleteUserSSR(req, res) {
     try {
-        await Entries.findByIdAndDelete(req.params.id);
+        await Entries.findByIdAndDelete({ _id: req.params.id, createdBy: req.user?._id });
         return res.redirect('/dashboard');
     } catch (error) {
         return res.redirect('/dashboard');
@@ -144,7 +143,7 @@ async function handleDeleteUserSSR(req, res) {
 
 async function handleUpdateUserSSR(req, res) {
     try {
-        await Entries.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        await Entries.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true, createdBy: req.user?._id });
         return res.redirect('/dashboard');
     } catch (error) {
         return res.redirect('/dashboard');

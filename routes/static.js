@@ -6,10 +6,11 @@ const { handleUser_Signup,
     handleRender_Login,
     handleRender_Signup
 } = require('../controller/static')
+const { isGuest } = require('../middleware/auth')
 
 // Render Pages
-router.get('/login', handleRender_Login);
-router.get('/signup', handleRender_Signup);
+router.get('/login', isGuest, handleRender_Login);
+router.get('/signup', isGuest, handleRender_Signup);
 
 // Handlers
 router.post('/api/signup', handleUser_Signup);

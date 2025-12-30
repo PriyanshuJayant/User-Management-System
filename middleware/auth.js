@@ -15,10 +15,9 @@ function isAuthenticated(req, res, next) {
         res.clearCookie('sessionId');
         return res.redirect('/login');
     }
-
+    
     // Attach user data to request for use in routes
     req.user = user;
-
     next();
 }
 
@@ -26,10 +25,11 @@ function isAuthenticated(req, res, next) {
 function isGuest(req, res, next) {
     const sessionId = req.cookies.sessionId;
 
-    if (sessionId && getUser(sessionId)) {
+    const user = getUser(sessionId);
+
+    if (sessionId && user) {
         return res.redirect('/dashboard');
     }
-
     next();
 }
 

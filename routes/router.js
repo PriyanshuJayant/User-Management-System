@@ -29,7 +29,7 @@ router.route('/dashboard')
 // API handlers
 router.route('/api/')
     .get(handleGetUserData)
-    .post(isAuthenticated, handleCreateUserSSR)
+    .post(isAuthenticated, handleCreateUserSSR)  // Need isAuthenticated for req.user
 
 router.route('/api/:id')
     .get(handleGetUserById)
