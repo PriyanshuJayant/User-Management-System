@@ -11,7 +11,19 @@
     <div class="cosmic-nebula"></div>
 
     <div class="container">
-      <h3>User Management System</h3>
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <h3>User Management System</h3>
+        <div class="user-info">
+          <span class="user-greeting">
+            Welcome,
+            <strong
+              ><%= currentUser?.name || currentUser?.email || 'User' %></strong
+            >
+          </span>
+          <a href="/api/logout" class="logout-btn">Logout</a>
+        </div>
+      </div>
 
       <form action="/api/" method="POST">
         <input type="text" name="fullName" placeholder="Full Name" required />

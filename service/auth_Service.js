@@ -8,6 +8,7 @@ function setUser(user) {
 
     sessionStore.set(sessionId, {
         _id: user._id,
+        name: user.name,
         email: user.email,
         createdAt: Date.now(),
     });

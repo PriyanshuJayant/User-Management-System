@@ -98,7 +98,10 @@ async function handleRenderEntriesPage(req, res) {
     try {
         const allUsers = await Entries.find({ createdBy: req.user?._id });
 
-        return res.render('index', { users: allUsers });
+        return res.render('index', {
+            users: allUsers,
+            currentUser: req.user
+        });
     } catch (error) {
         return res.status(500).json({
             message: 'Error fetching Data',
