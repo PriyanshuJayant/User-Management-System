@@ -11,7 +11,6 @@ const { handleGetUserData,
     handleRenderEditPage,
     handleRenderEntriesPage
 } = require('../controller/routes.js')
-const { isAuthenticated, isGuest } = require('../middleware/auth.js')
 
 // SSR routes
 router.post('/users', handleCreateUserSSR);
@@ -24,13 +23,12 @@ router.route('/')
     .get(handleRenderHomePage)
 
 router.route('/dashboard')
-    .get(isAuthenticated, handleRenderEntriesPage)
+    .get( handleRenderEntriesPage) // Needs Auth Check
 
 // API handlers
 router.route('/api/')
     .get(handleGetUserData)
-    .post(isAuthenticated, handleCreateUserSSR)  // Need isAuthenticated for req.user
-
+    .post( handleCreateUserSSR)  // Needs Auth Check
 router.route('/api/:id')
     .get(handleGetUserById)
     .delete(handleDeleteUserById)

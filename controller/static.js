@@ -1,5 +1,4 @@
 const User = require('../models/Users.js');
-const { setUser, removeUser } = require('../service/auth_Service.js');
 
 async function handleRender_Login(req, res) {
     return res.render('login.ejs');
@@ -43,26 +42,22 @@ async function handleUser_Login(req, res) {
             return res.render("login", { error: "Email and password are required" });
         }
 
-        // Step 1: Find user by EMAIL only
         const user = await User.findOne({ email });
 
-        // Step 2: Check if user exists
         if (!user) {
             return res.render("login", { error: "Email not registered" });
         }
 
-        // Step 3: Check if password matches
         if (user.password !== password) {
             return res.render("login", { error: "Incorrect password" });
         }
 
-        // Create session and get sessionId
-        const sessionId = setUser(user);
-        // Set cookie in browser
-        res.cookie('sessionId', sessionId, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000  // 24 hours
-        });
+        // Auth Session ID 
+        // const sessionId = setUser(user);
+        // res.cookie('sessionId', sessionId, {
+        //     httpOnly: true,
+        //     maxAge: 24 * 60 * 60 * 1000  // 24 hours
+        // });
 
         return res.redirect("/dashboard");
 
@@ -73,9 +68,12 @@ async function handleUser_Login(req, res) {
 }
 
 async function handleUser_Logout(req, res) {
-    const sessionId = req.cookies.sessionId;
-    removeUser(sessionId);
-    res.clearCookie('sessionId');
+    
+    // ! Clear Cookie API
+    // const sessionId = req.cookies.sessionId;
+
+    // removeUser(sessionId);
+    // res.clearCookie('sessionId');
 
     return res.redirect('/login');
 }
