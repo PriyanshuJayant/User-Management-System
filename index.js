@@ -20,7 +20,7 @@ app.set('views', path.resolve('./views'));
 app.use(session(sessionConfig));
 
 // Connection
-connectMongoDB(process.env._MONGODB_URL);
+connectMongoDB(process.env.MONGODB_URL);
 
 // Memory Usage
 // memoryUsage();
