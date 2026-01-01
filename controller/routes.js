@@ -93,6 +93,7 @@ async function handleRenderHomePage(req, res) {
             error: error
         })
     }
+    
 }
 async function handleRenderEntriesPage(req, res) {
     try {

@@ -52,16 +52,25 @@ async function handleUser_Login(req, res) {
             return res.render("login", { error: "Incorrect password" });
         }
 
-        // Auth Session ID 
+        // !Auth Session ID 
         // const sessionId = setUser(user);
         // res.cookie('sessionId', sessionId, {
         //     httpOnly: true,
         //     maxAge: 24 * 60 * 60 * 1000  // 24 hours
         // });
 
+        // Stores User Info in Session
+        req.session.userId = user._id.toString();
+        req.session.userId = user._id.toString();
+        req.session.user = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            createdAt: user.createdAt
+        };
+        
+
         return res.redirect("/dashboard");
-
-
     } catch (error) {
         return res.status(500).json({ message: "Something went wrong", error: error.message });
     }
@@ -75,7 +84,13 @@ async function handleUser_Logout(req, res) {
     // removeUser(sessionId);
     // res.clearCookie('sessionId');
 
-    return res.redirect('/login');
+    // Express Session Handeling Session Destruction
+    req.session.destroy((err) => {
+        if(err) return res.status(500).json({ message: 'Logout Failed'});
+        return res.redirect('/login');
+    });
+    
+
 }
 
 module.exports = {

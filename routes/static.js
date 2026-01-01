@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { isGuest } = require('../middleware/auth');
 const { handleUser_Signup,
     handleUser_Login,
     handleUser_Logout,
@@ -8,8 +9,8 @@ const { handleUser_Signup,
 } = require('../controller/static')
 
 // Render Pages
-router.get('/login', handleRender_Login); // Needs Already Logged In Check
-router.get('/signup', handleRender_Signup); // Needs Already Logged In Check
+router.get('/login', isGuest, handleRender_Login); // Needs Already Logged In Check
+router.get('/signup', isGuest, handleRender_Signup); // Needs Already Logged In Check
 
 // Handlers
 router.post('/api/signup', handleUser_Signup);
