@@ -39,19 +39,29 @@ async function handleUser_Login(req, res) {
     try {
         const { email, password } = req.body;
 
-        if (!email || !password)
+        if (!email || !password) {
             return res.render("login", { error: "Email and password are required" });
+        }
 
+        // Step 1: Find user by EMAIL only
         const user = await User.findOne({ email });
-        if (!user)
-            return res.render("login", { error: "Email not registered" });
-        if (user.password !== password)
-            return res.render("login", { error: "Incorrect password" });
 
+        // Step 2: Check if user exists
+        if (!user) {
+            return res.render("login", { error: "Email not registered" });
+        }
+
+        // Step 3: Check if password matches
+        if (user.password !== password) {
+            return res.render("login", { error: "Incorrect password" });
+        }
+
+        // Create session and get sessionId
         const sessionId = setUser(user);
+        // Set cookie in browser
         res.cookie('sessionId', sessionId, {
             httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000
+            maxAge: 24 * 60 * 60 * 1000  // 24 hours
         });
 
         return res.redirect("/dashboard");

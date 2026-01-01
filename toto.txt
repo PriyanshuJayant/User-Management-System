@@ -16,12 +16,4 @@ Create a Log File that Keeps track of number of entries in the database like use
 
 3. Create a Seprate page in which any user can add their data and it will be stored in the database without CreatedBy field
 
-4. User Count in Dashboard
-
-5. When table is empty show a message that No Entries Found
-
-6. Password Hashing
-
-7. User added/ Deleted Popup message
-
-8. 
+4. in /Dashboard add a Name that tells who am i logged in as

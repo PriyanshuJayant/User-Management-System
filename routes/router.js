@@ -11,8 +11,7 @@ const { handleGetUserData,
     handleRenderEditPage,
     handleRenderEntriesPage
 } = require('../controller/routes.js')
-
-const { isAuthenticated } = require('../middleware/auth.js')
+const { isAuthenticated, isGuest } = require('../middleware/auth.js')
 
 // SSR routes
 router.post('/users', handleCreateUserSSR);

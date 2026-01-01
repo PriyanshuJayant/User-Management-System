@@ -1,6 +1,6 @@
 const { getUser } = require('../service/auth_Service.js');
 
-// Check for Authentication
+// Middleware: Check if user is logged in
 function isAuthenticated(req, res, next) {
     const sessionId = req.cookies.sessionId;
 
@@ -11,15 +11,17 @@ function isAuthenticated(req, res, next) {
     const user = getUser(sessionId);
 
     if (!user) {
+        // Invalid or expired session
         res.clearCookie('sessionId');
         return res.redirect('/login');
     }
     
+    // Attach user data to request for use in routes
     req.user = user;
     next();
 }
 
-// Check for Alreadt Loged in
+// Middleware: Redirect if already logged in (for login/signup pages)
 function isGuest(req, res, next) {
     const sessionId = req.cookies.sessionId;
 
