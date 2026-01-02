@@ -61,7 +61,6 @@ async function handleUser_Login(req, res) {
 
         // Stores User Info in Session
         req.session.userId = user._id.toString();
-        req.session.userId = user._id.toString();
         req.session.user = {
             _id: user._id,
             name: user.name,
