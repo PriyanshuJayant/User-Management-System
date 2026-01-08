@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { handleGetUserData,
-    handleCreateUser,
     handleGetUserById,
     handleDeleteUserById,
     handleUpdateUserByID,
@@ -9,23 +8,29 @@ const { handleGetUserData,
     handleCreateUserSSR,
     handleDeleteUserSSR,
     handleUpdateUserSSR,
-    handleRenderEditPage
+    handleRenderEditPage,
+    handleRenderEntriesPage
 } = require('../controller/routes.js')
 
+const { isAuthenticated } = require('../middleware/auth.js')
 
+// SSR routes
 router.post('/users', handleCreateUserSSR);
 router.post('/users/:id/delete', handleDeleteUserSSR);
 router.post('/users/:id/update', handleUpdateUserSSR);
 router.get('/users/:id/edit', handleRenderEditPage);
 
-// handlers
+// SSR handlers
 router.route('/')
     .get(handleRenderHomePage)
-    .post(handleCreateUserSSR)
 
+router.route('/dashboard')
+    .get(isAuthenticated, handleRenderEntriesPage)
+
+// API handlers
 router.route('/api/')
     .get(handleGetUserData)
-    .post(handleCreateUser)
+    .post(isAuthenticated, handleCreateUserSSR)  // Need isAuthenticated for req.user
 
 router.route('/api/:id')
     .get(handleGetUserById)

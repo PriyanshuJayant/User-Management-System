@@ -1,34 +1,9 @@
-const User = require('../models/Schema.js');
+const Entries = require('../models/Schema.js');
 
 // GET
 async function handleGetUserData(req, res) {
-    const allUsers = await User.find({});
+    const allUsers = await Entries.find({});
     return res.send(allUsers);
-}
-
-// POST
-async function handleCreateUser(req, res) {
-    const { fullName, email, age, gender } = req.body;
-    if (!fullName || !email || !age || !gender) {
-        return res.status(400).json({ message: "Invalid Data" });
-    }
-    try {
-        const user = await User.create({
-            fullName,
-            email,
-            age,
-            gender
-        })
-        return res.status(200).json({
-            message: "User Created Successfully",
-            data: user
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: "Error Creating User",
-            error: error.message
-        })
-    }
 }
 
 // Get User by ID
@@ -38,7 +13,7 @@ async function handleGetUserById(req, res) {
         if (!userID) {
             return res.status(400).json({ message: 'User ID is required' });
         }
-        const user = await User.findById(userID)
+        const user = await Entries.findById(userID)
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -59,7 +34,7 @@ async function handleDeleteUserById(req, res) {
         if (!userID) {
             return res.status(400).json({ message: 'User ID is required' });
         }
-        const user = await User.findByIdAndDelete(userID);
+        const user = await Entries.findByIdAndDelete(userID);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -86,7 +61,7 @@ async function handleUpdateUserByID(req, res) {
         if (!Object.keys(update).length) {
             return res.status(400).json({ message: 'No update Data Provided' });
         }
-        const updateUser = await User.findByIdAndUpdate(
+        const updateUser = await Entries.findByIdAndUpdate(
             userID,
             update,
             { new: true, runValidators: true }
@@ -110,8 +85,23 @@ async function handleUpdateUserByID(req, res) {
 // Render Home Page with all Users
 async function handleRenderHomePage(req, res) {
     try {
-        const allUsers = await User.find({});
-        return res.render('index', { users: allUsers });
+        const allUsers = await Entries.find({});
+        return res.render('home', { users: allUsers });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error fetching Data',
+            error: error
+        })
+    }
+}
+async function handleRenderEntriesPage(req, res) {
+    try {
+        const allUsers = await Entries.find({ createdBy: req.user?._id });
+
+        return res.render('index', {
+            users: allUsers,
+            currentUser: req.user
+        });
     } catch (error) {
         return res.status(500).json({
             message: 'Error fetching Data',
@@ -127,49 +117,55 @@ async function handleCreateUserSSR(req, res) {
         const { fullName, email, age, gender } = req.body;
 
         if (!fullName || !email || !age || !gender) {
-            return res.redirect('/');
+            return res.redirect('/dashboard?error=invalid');
         }
 
-        await User.create({ fullName, email, age, gender });
+        const createdBy = req.user?._id;
+        await Entries.create({
+            fullName,
+            email,
+            age,
+            gender,
+            createdBy
+        });
 
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.redirect('/?error=server');
+        return res.redirect('/dashboard?error=server');
     }
 }
 
 async function handleDeleteUserSSR(req, res) {
     try {
-        await User.findByIdAndDelete(req.params.id);
-        return res.redirect('/');
+        await Entries.findByIdAndDelete({ _id: req.params.id, createdBy: req.user?._id });
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     }
 }
 
 async function handleUpdateUserSSR(req, res) {
     try {
-        await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        return res.redirect('/');
+        await Entries.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true, createdBy: req.user?._id });
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     }
 }
 
 async function handleRenderEditPage(req, res) {
     try {
-        const user = await User.findById(req.params.id);
-        if (!user) return res.redirect('/');
+        const user = await Entries.findById(req.params.id);
+        if (!user) return res.redirect('/dashboard');
         res.render('edit', { user });
     } catch {
-        res.redirect('/');
+        res.redirect('/dashboard');
     }
 }
 
 
 module.exports = {
     handleGetUserData,
-    handleCreateUser,
     handleGetUserById,
     handleDeleteUserById,
     handleUpdateUserByID,
@@ -178,5 +174,5 @@ module.exports = {
     handleDeleteUserSSR,
     handleUpdateUserSSR,
     handleRenderEditPage,
-
+    handleRenderEntriesPage,
 }

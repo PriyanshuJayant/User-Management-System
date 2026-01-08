@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+    },
     fullName: {
         type: String,
         required: true,
@@ -9,7 +13,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
         lowercase: true
     },
     age: {
@@ -23,8 +27,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['male', 'female', 'other'],
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
-const User = mongoose.model('users', userSchema);
+const Entries = mongoose.model('data', userSchema);
 
-module.exports = User;
+module.exports = Entries;
