@@ -1,4 +1,3 @@
-const { getUser } = require('../service/auth_Service.js');
 
 // Check for Authentication
 function isAuthenticated(req, res, next) {

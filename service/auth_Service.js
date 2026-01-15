@@ -1,25 +1,14 @@
-const { v4: uuidv4 } = require("uuid");
-
-// In-memory session store for stateful authentication
-const sessionStore = new Map();
+const jwt = require('jsonwebtoken');
 
 function setUser(user) {
-    const sessionId = uuidv4();
-
-    sessionStore.set(sessionId, {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        createdAt: Date.now(),
-    });
-    return sessionId;
+    return jwt.sign(user, process.env.JSON_SECRET || 'local-key')
 }
 
-function getUser(sessionId) {
-    if (!sessionId) {
+function getUser(token) {
+    if (!token) {
         return null;
     }
-    return sessionStore.get(sessionId) || null;
+    return jwt.verify(token, process.env.JSON_SECRET || 'local_key');
 }
 
 function removeUser(sessionId) {

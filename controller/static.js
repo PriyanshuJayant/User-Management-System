@@ -48,12 +48,14 @@ async function handleUser_Login(req, res) {
         if (user.password !== password)
             return res.render("login", { error: "Incorrect password" });
 
-        const sessionId = setUser(user);
-        res.cookie('sessionId', sessionId, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000
-        });
+        // const sessionId = setUser(user);
+        // res.cookie('sessionId', sessionId, {
+        //     httpOnly: true,
+        //     maxAge: 24 * 60 * 60 * 1000
+        // });
 
+        const token = setUser(user);
+        res.cookie('sessionID', token);
         return res.redirect("/dashboard");
 
 
