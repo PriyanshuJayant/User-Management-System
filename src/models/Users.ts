@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Model } from 'mongoose';
+import { IUser } from '../types';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema<IUser>({
     name: {
         type: String,
         required: true,
@@ -19,6 +20,6 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const User = mongoose.model('user', userSchema);
+const User: Model<IUser> = mongoose.model<IUser>('user', userSchema);
 
-module.exports = User;
+export default User;
